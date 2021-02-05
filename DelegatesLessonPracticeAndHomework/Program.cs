@@ -6,27 +6,49 @@ namespace DelegatesLessonPracticeAndHomework
     {
         static void Main(string[] args)
         {
-            var button = new Button<string>
+            var stringButton = new Button<string>
             {
                 Border = "*",
-                Text = "Кнопка",
+                Text = "String",
                 Width = 15,
                 Height = 5,
                 BorderColor = ConsoleColor.Red,
                 FillColor = ConsoleColor.Yellow,
-                PushButton = new PushButton<string>(PrintText)
             };
 
-            button.Display();
-            button.PushButton("Hello", "world", "!");
-        }
+            stringButton.Display();
 
-        private static void PrintText(params string[] text)
-        {
-            foreach(var row in text)
+            stringButton.Actions += message => 
+            { 
+                foreach (var word in message)
+                    Console.Write(word); 
+            };
+            stringButton.Actions += enter => Console.WriteLine();
+            stringButton.Actions += enter => Console.WriteLine();
+
+            stringButton.PushButton("Привет", ",", " мир!");
+
+            var intButton = new Button<int>
             {
-                Console.WriteLine(row);
-            }
+                Border = "o",
+                Text = "Int",
+                Width = 20,
+                Height = 5,
+                BorderColor = ConsoleColor.Yellow,
+                FillColor = ConsoleColor.Blue,
+            };
+
+            intButton.Display();
+
+            intButton.Actions += numbers => 
+            {
+                int sum = 0;
+                foreach (var number in numbers)
+                    sum += number;
+                Console.WriteLine($"Sum = {sum}");
+            };
+
+            intButton.PushButton(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         }
     }
 }

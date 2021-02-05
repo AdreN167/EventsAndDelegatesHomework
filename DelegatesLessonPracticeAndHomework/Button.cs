@@ -2,7 +2,7 @@
 
 namespace DelegatesLessonPracticeAndHomework
 {
-    public delegate void PushButton<T>(params T[] arguments);
+    // public delegate void PushButton<T>(params T[] arguments);
 
     public class Button<T>
     {
@@ -12,8 +12,13 @@ namespace DelegatesLessonPracticeAndHomework
         public int Height { get; set; }
         public ConsoleColor BorderColor { get; set; }
         public ConsoleColor FillColor { get; set; }
-        
-        public PushButton<T> PushButton { get; set; }
+
+        public event Action<T[]> Actions;
+
+        public void PushButton(params T[] arguments)
+        {
+            Actions?.Invoke(arguments);
+        }
 
         public void Display()
         {
